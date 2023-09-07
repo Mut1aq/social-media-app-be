@@ -18,6 +18,7 @@ export const mongooseOptions: MongooseModuleAsyncOptions = {
   useFactory: async (configService: ConfigService) => ({
     uri: configService.get<string>('MONGODB_URL')!,
     retryAttempts: 10,
+    dbName: 'socialMediaDevDB',
   }),
   inject: [ConfigService],
 };

@@ -7,11 +7,13 @@ import {
   configOptions,
   mongooseOptions,
 } from 'shared/constants/app-options.constant';
+import { ModulesModule } from 'modules/modules.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
     MongooseModule.forRootAsync(mongooseOptions),
+    ModulesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
