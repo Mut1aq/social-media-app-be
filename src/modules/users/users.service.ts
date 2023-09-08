@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -36,9 +36,7 @@ export class UsersService {
     const user = await this.userModel
       .findOne<UserI>({ [property]: value })
       .exec();
-    if (!user) {
-      throw new HttpException('user not found', HttpStatus.BAD_REQUEST);
-    }
+
     return user!;
   }
 }
