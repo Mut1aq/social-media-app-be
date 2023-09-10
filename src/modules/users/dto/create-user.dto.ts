@@ -5,7 +5,9 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { IsNumbersIncluded } from '../decorators/is-numbers-included.decorator';
 import { IsUserPropertyExists } from '../decorators/is-user-property-exists.decorator';
+import { MatchTwoProperties } from '../decorators/match-two-properties.decorator';
 
 export class CreateUserDto {
   @MaxLength(320)
@@ -18,14 +20,18 @@ export class CreateUserDto {
   @IsNotEmpty()
   email!: string;
 
+  @MatchTwoProperties('confirmPassword')
   @MaxLength(20)
   @MinLength(8)
   @IsString()
+  @IsNumbersIncluded()
   @IsNotEmpty()
   password!: string;
+
   @MaxLength(20)
   @MinLength(8)
   @IsString()
+  @IsNumbersIncluded()
   @IsNotEmpty()
   confirmPassword!: string;
 

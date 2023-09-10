@@ -32,11 +32,14 @@ export class UsersService {
     return `This action removes a #${id} user`;
   }
 
-  async findUserByProperty(property: string, value: string): Promise<UserI> {
+  async findUserByProperty(
+    property: string,
+    value: string,
+  ): Promise<UserI | null> {
     const user = await this.userModel
       .findOne<UserI>({ [property]: value })
       .exec();
 
-    return user!;
+    return user;
   }
 }
