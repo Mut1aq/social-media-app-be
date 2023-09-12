@@ -9,5 +9,6 @@ import { IsUserPropertyExistsValidator } from './decorators/is-user-property-exi
   controllers: [UsersController],
   providers: [UsersService, IsUserPropertyExistsValidator],
   imports: [MongooseModule.forFeature([userMongooseFeature])],
+  exports: [UsersService],
 })
 export class UsersModule {}

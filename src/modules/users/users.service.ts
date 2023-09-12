@@ -12,8 +12,10 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  create(_createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const createdUser = new this.userModel(createUserDto);
+    await createdUser.save();
+    return createdUser;
   }
 
   findAll() {
@@ -40,6 +42,20 @@ export class UsersService {
       .findOne<UserI>({ [property]: value })
       .exec();
 
+    return user;
+  }
+
+  async findUserByCredentials(credentials: string): Promise<UserI | null> {
+    const user = await this.userModel.findOne<UserI>({
+      $or: [
+        {
+          email: credentials,
+        },
+        {
+          username: credentials,
+        },
+      ],
+    });
     return user;
   }
 }

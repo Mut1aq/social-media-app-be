@@ -15,7 +15,7 @@ export class IsNumbersIncludedValidator
     value: string,
     _validationArguments?: ValidationArguments | undefined,
   ): boolean {
-    return stringNumbers.some((stringNumber) => value.includes(stringNumber));
+    return stringNumbers.some((stringNumber) => value?.includes(stringNumber));
   }
   defaultMessage(
     _validationArguments?: ValidationArguments | undefined,
