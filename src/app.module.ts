@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   configOptions,
   jwtOptions,
   mongooseOptions,
-} from 'shared/constants/app-options.constant';
+} from 'shared/configs/app-options.constant';
 import { ModulesModule } from 'modules/modules.module';
 import { JwtModule } from '@nestjs/jwt';
+import { guards } from 'shared/configs/app-configs.constant';
 
 @Module({
   imports: [
@@ -18,7 +17,7 @@ import { JwtModule } from '@nestjs/jwt';
     JwtModule.registerAsync(jwtOptions),
     ModulesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [...guards],
 })
 export class AppModule {}

@@ -8,6 +8,6 @@ And to insure logged out users can't access protected routes I want to use a ses
 
 1. creating a Users collection using MongoDB
 2. Build a Register Route
-3. Build a Login / Logout Route
+3. Build a Login
 4. Build an Auth Guard
-5. Use as a session management tool
+5. Use as a session management tool Build Logout Route
