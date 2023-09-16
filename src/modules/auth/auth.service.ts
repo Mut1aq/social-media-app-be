@@ -60,4 +60,9 @@ export class AuthService {
 
     return { accessToken };
   }
+
+  async logUserOut(userID: string) {
+    await this.cacheService.deleteKey(userID);
+    return { message: 'Log out Successfully' };
+  }
 }
