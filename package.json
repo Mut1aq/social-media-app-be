@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/cache-manager": "^2.1.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^10.0.0",
@@ -28,10 +29,13 @@
     "@nestjs/mongoose": "^10.0.1",
     "@nestjs/platform-express": "^10.0.0",
     "bcrypt": "^5.1.1",
+    "cache-manager": "^5.2.3",
+    "cache-manager-redis-yet": "^4.1.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "joi": "^17.10.0",
     "mongoose": "^7.5.0",
+    "redis": "^4.6.8",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
