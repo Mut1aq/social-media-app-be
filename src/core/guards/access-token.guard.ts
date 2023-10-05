@@ -10,6 +10,9 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { IS_PUBLIC_KEY } from 'core/decorators/public.decorator';
 import { CacheService } from 'core/libs/cache/cache.service';
+import { I18nTranslations } from 'generated/i18n.generated';
+import { I18nContext } from 'nestjs-i18n';
+import { DecodedToken } from 'shared/interfaces/tokens.interface';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
@@ -26,6 +29,7 @@ export class AccessTokenGuard implements CanActivate {
       context.getClass(),
     ]);
     if (isPublic) return true;
+    const i18n = I18nContext.current<I18nTranslations>(context)!;
     try {
       {
         const request = context.switchToHttp().getRequest();
@@ -34,32 +38,49 @@ export class AccessTokenGuard implements CanActivate {
 
         if (!authorization || Array.isArray(authorization)) {
           throw new HttpException(
-            'Invalid Auth Header',
-            HttpStatus.NOT_ACCEPTABLE,
+            i18n.translate('auth.errors.loginFirst'),
+            HttpStatus.BAD_REQUEST,
           );
         }
 
-        const [_, token] = authorization.split(' ');
+        const [bearer, token] = authorization.split(' ');
 
-        const decodedToken = this.jwtService.verify(token, {
+        if (bearer !== 'Bearer')
+          throw new HttpException(
+            i18n.translate('auth.errors.loginFirst'),
+            HttpStatus.BAD_REQUEST,
+          );
+
+        const decodedToken = this.jwtService.verify<DecodedToken>(token, {
           secret: this.configService.get<string>('USER_ACCESS_TOKEN_SECRET')!,
         });
 
         if (!decodedToken) {
-          throw new HttpException('Unauthorized user', HttpStatus.UNAUTHORIZED);
+          throw new HttpException(
+            i18n.translate('auth.errors.unauthorized'),
+            HttpStatus.UNAUTHORIZED,
+          );
         }
-        const userFromCache = await this.cacheService.getField(
+        const accessTokenFromCache = await this.cacheService.getField(
           decodedToken.sub,
           'accessToken',
         );
-        if (!!userFromCache) {
+        if (!!accessTokenFromCache) {
           request.user = decodedToken;
           return true;
         }
-        throw new HttpException('Unauthorized user', HttpStatus.UNAUTHORIZED);
+        throw new HttpException(
+          i18n.translate('auth.errors.unauthorized'),
+          HttpStatus.UNAUTHORIZED,
+        );
       }
-    } catch (error) {
-      throw new HttpException('Unauthorized user', HttpStatus.UNAUTHORIZED);
+    } catch (error: any) {
+      throw new HttpException(
+        !!error.message
+          ? error.message
+          : i18n.translate('auth.errors.unauthorized'),
+        !!error.status ? error.status : HttpStatus.UNAUTHORIZED,
+      );
     }
   }
 }

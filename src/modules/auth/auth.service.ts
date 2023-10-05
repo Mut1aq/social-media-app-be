@@ -6,6 +6,9 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt/dist';
 import { ConfigService } from '@nestjs/config';
 import { CacheService } from 'core/libs/cache/cache.service';
+import { TokenPayload } from 'shared/interfaces/tokens.interface';
+import { I18nService } from 'nestjs-i18n';
+import { I18nTranslations } from 'generated/i18n.generated';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +17,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly cacheService: CacheService,
+    private readonly i18n: I18nService<I18nTranslations>,
   ) {}
   async registerUser(createUserDto: CreateUserDto) {
     const { password } = createUserDto;
@@ -28,15 +32,21 @@ export class AuthService {
 
     const user = await this.usersService.findUserByCredentials(credentials);
     if (!user) {
-      throw new HttpException('invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        this.i18n.translate('auth.errors.wrongCredentials'),
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const isPasswordCorrect = await bcrypt.compare(password, user!.password);
 
     if (!isPasswordCorrect) {
-      throw new HttpException('invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        this.i18n.translate('auth.errors.wrongCredentials'),
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
-    const tokenPayload = {
+    const tokenPayload: TokenPayload = {
       sub: user._id,
     };
     const accessTokenFromCache = await this.cacheService.getField(

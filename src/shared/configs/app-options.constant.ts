@@ -1,13 +1,17 @@
 import { CacheModuleAsyncOptions } from '@nestjs/cache-manager';
-import {
-  ConfigModule,
-  ConfigModuleOptions,
-  ConfigService,
-} from '@nestjs/config';
+import { ConfigModuleOptions, ConfigService } from '@nestjs/config';
 import { JwtModuleAsyncOptions } from '@nestjs/jwt';
 import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
 import { redisStore } from 'cache-manager-redis-yet';
 import * as Joi from 'joi';
+import {
+  QueryResolver,
+  HeaderResolver,
+  AcceptLanguageResolver,
+  CookieResolver,
+} from 'nestjs-i18n';
+import { I18nOptions } from 'nestjs-i18n/dist/interfaces';
+import { join } from 'path';
 import { RedisClientOptions } from 'redis';
 
 export const configOptions: ConfigModuleOptions = {
@@ -18,7 +22,6 @@ export const configOptions: ConfigModuleOptions = {
 };
 
 export const mongooseOptions: MongooseModuleAsyncOptions = {
-  imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
     uri: configService.get<string>('MONGODB_URL')!,
     retryAttempts: 10,
@@ -27,7 +30,6 @@ export const mongooseOptions: MongooseModuleAsyncOptions = {
 };
 
 export const jwtOptions: JwtModuleAsyncOptions = {
-  imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
     secret: configService.get<string>('USER_ACCESS_TOKEN_SECRET')!,
     signOptions: {
@@ -39,7 +41,6 @@ export const jwtOptions: JwtModuleAsyncOptions = {
 };
 
 export const redisOptions: CacheModuleAsyncOptions<RedisClientOptions> = {
-  imports: [ConfigModule],
   useFactory: async (configService: ConfigService) => ({
     store: redisStore,
     socket: {
@@ -50,4 +51,19 @@ export const redisOptions: CacheModuleAsyncOptions<RedisClientOptions> = {
   }),
   inject: [ConfigService],
   isGlobal: true,
+};
+
+export const i18nOptions: I18nOptions = {
+  fallbackLanguage: 'en',
+  loaderOptions: {
+    path: join(__dirname, '../../resources/i18n'),
+    watch: true,
+  },
+  typesOutputPath: join(`${process.cwd()}/src/generated/i18n.generated.ts`),
+  resolvers: [
+    { use: QueryResolver, options: ['lang', 'locale', 'l'] },
+    new HeaderResolver(['x-custom-lang']),
+    AcceptLanguageResolver,
+    new CookieResolver(['lang', 'locale', 'l']),
+  ],
 };
