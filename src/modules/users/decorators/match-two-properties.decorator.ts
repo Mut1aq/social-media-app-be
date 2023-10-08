@@ -4,6 +4,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
+import { DynamicObjectI } from 'shared/interfaces/dynamic-object.interface';
 
 @ValidatorConstraint({ async: false, name: 'MatchTwoProperties' })
 export class MatchTwoPropertiesValidator
@@ -11,7 +12,7 @@ export class MatchTwoPropertiesValidator
 {
   validate(value: string, validationArguments?: ValidationArguments): boolean {
     const [property] = validationArguments?.constraints!;
-    const dtoObject = validationArguments?.object as { [key: string]: any };
+    const dtoObject = validationArguments?.object as DynamicObjectI;
 
     return dtoObject[property] === value;
   }

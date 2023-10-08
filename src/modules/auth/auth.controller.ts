@@ -11,13 +11,7 @@ export class AuthController {
   @Public()
   @Post('register')
   async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      return await this.authService.registerUser(createUserDto);
-    } catch (error) {
-      console.log(error);
-
-      return { message: 'an error occurred' };
-    }
+    return await this.authService.registerUser(createUserDto);
   }
 
   @Public()

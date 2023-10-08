@@ -6,7 +6,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt/dist';
 import { ConfigService } from '@nestjs/config';
 import { CacheService } from 'core/libs/cache/cache.service';
-import { TokenPayload } from 'shared/interfaces/tokens.interface';
+import { TokenPayloadI } from 'shared/interfaces/tokens.interface';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'generated/i18n.generated';
 
@@ -46,7 +46,7 @@ export class AuthService {
       );
     }
 
-    const tokenPayload: TokenPayload = {
+    const tokenPayload: TokenPayloadI = {
       sub: user._id,
     };
     const accessTokenFromCache = await this.cacheService.getField(

@@ -56,8 +56,7 @@ export type I18nTranslations = {
         "minLength": string;
         "phoneNumber": string;
         "maxLength": string;
-        "uniqueEmail": string;
-        "uniqueUsername": string;
+        "uniqueProperty": string;
         "passwordContains": {
             "uppercase": string;
             "lowercase": string;

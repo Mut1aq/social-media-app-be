@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { Field } from 'shared/interfaces/cache-fields.type';
 import { CacheObject } from 'shared/interfaces/cache-object.interface';
+import { DynamicObjectI } from 'shared/interfaces/dynamic-object.interface';
 
 @Injectable()
 export class CacheService {
@@ -29,7 +30,7 @@ export class CacheService {
   }
 
   async getField(key: string, field: Field): Promise<string | undefined> {
-    const value = (await this.cacheManager.get(key)) as { [key: string]: any };
+    const value = (await this.cacheManager.get(key)) as DynamicObjectI;
 
     if (typeof value === 'object' && !!value) {
       return value[field];
