@@ -10,13 +10,12 @@ As a developer I want my backend to have the following: -
 
 ## Acceptance Criteria: -
 
-### Make sure the code is following the best practice
+### Make sure the code is following the best practice Done
 
 1. Remove unnecessary imports for config module.
-2. Fix naming issue in the auth controller.
-3. Separate types to different folder.
+2. Separate types to different folder.
 
-### Multi-lang support
+### Multi-lang support Done
 
 1. Install and configure I18n module.
 2. Create folder and path for translations.
@@ -25,6 +24,7 @@ As a developer I want my backend to have the following: -
 ### Custom Error Handling system
 
 1. Create and bind a new HttpException Filter with meaningful errors.
+2. Create a logging system.
 
 ### Have API Documentation
 

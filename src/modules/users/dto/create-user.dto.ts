@@ -8,7 +8,6 @@ import {
 import { I18nTranslations } from 'generated/i18n.generated';
 import { i18nValidationMessage } from 'nestjs-i18n';
 import { IsNumbersIncluded } from '../decorators/is-numbers-included.decorator';
-import { IsUserPropertyExists } from '../decorators/is-user-property-exists.decorator';
 import { MatchTwoProperties } from '../decorators/match-two-properties.decorator';
 
 export class CreateUserDto {
@@ -23,9 +22,6 @@ export class CreateUserDto {
       property: 'Email',
       characters: 3,
     }),
-  })
-  @IsUserPropertyExists('email', {
-    message: i18nValidationMessage<I18nTranslations>('validation.uniqueEmail'),
   })
   @IsString({
     message: i18nValidationMessage<I18nTranslations>('validation.isString', {
@@ -119,11 +115,6 @@ export class CreateUserDto {
     message: i18nValidationMessage<I18nTranslations>('validation.isString', {
       property: 'Username',
     }),
-  })
-  @IsUserPropertyExists('username', {
-    message: i18nValidationMessage<I18nTranslations>(
-      'validation.uniqueUsername',
-    ),
   })
   @IsNotEmpty({
     message: i18nValidationMessage<I18nTranslations>('validation.isNotEmpty', {

@@ -1,8 +1,8 @@
-export interface DecodedToken {
+export interface DecodedTokenI {
   sub: string;
   iat: number;
   exp: number;
 }
-export interface TokenPayload {
+export interface TokenPayloadI {
   sub: string;
 }

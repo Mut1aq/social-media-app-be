@@ -8,8 +8,7 @@
   "minLength": "{property} must be more than {characters} characters",
   "maxLength": "{property} must be less than {characters} characters",
   "phoneNumber": "You must enter a valid Phone Number",
-  "uniqueUsername": "This username already exists, please choose another one",
-  "uniqueEmail": "This email already exists, please choose another one",
+  "uniqueProperty": "An account already has {property} {value}, please choose another one",
   "passwordContains": {
     "uppercase": "Password must contain an uppercase letter",
     "lowercase": "Password must contain a lowercase letter",

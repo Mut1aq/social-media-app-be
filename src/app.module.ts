@@ -9,7 +9,7 @@ import {
 } from 'shared/configs/app-options.constant';
 import { ModulesModule } from 'modules/modules.module';
 import { JwtModule } from '@nestjs/jwt';
-import { guards } from 'shared/configs/app-configs.constant';
+import { filters, guards } from 'shared/configs/app-configs.constant';
 import { CacheModule } from 'core/libs/cache/cache.module';
 import { I18nModule } from 'nestjs-i18n';
 
@@ -23,6 +23,6 @@ import { I18nModule } from 'nestjs-i18n';
     ModulesModule,
   ],
   controllers: [],
-  providers: [...guards],
+  providers: [...guards, ...filters],
 })
 export class AppModule {}

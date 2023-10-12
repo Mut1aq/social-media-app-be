@@ -8,8 +8,7 @@
   "minLength": "{property} يجب ان يكون اكثر من {characters} حرف",
   "phoneNumber": "يجب ادخال رقم هاتف صحيح",
   "maxLength": "{property} يجب ان يكون اقل من {characters} حرف",
-  "uniqueEmail": "الايميل مستخدم من قبل, يرجى اختيار ايميل ثاني",
-  "uniqueUsername": "اسم المستخدم مستخدم من قبل, يرجى اختيار اسم مستخدم ثاني",
+  "uniqueProperty": "يوجد حساب مستخدم {property}: {value}, الرجاء استخدام {property} مختلف",
   "passwordContains": {
     "uppercase": "يجب ان تحتوي كلمة السر على حرف كبير",
     "lowercase": "يجب ان تحتوي كلمة السر على حرف صغير",
