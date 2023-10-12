@@ -12,6 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { filters, guards } from 'shared/configs/app-configs.constant';
 import { CacheModule } from 'core/libs/cache/cache.module';
 import { I18nModule } from 'nestjs-i18n';
+import { LoggerModule } from 'core/libs/logger/logger.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { I18nModule } from 'nestjs-i18n';
     JwtModule.registerAsync(jwtOptions),
     CacheModule.register(),
     ModulesModule,
+    LoggerModule,
   ],
   controllers: [],
   providers: [...guards, ...filters],
