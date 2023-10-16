@@ -1,6 +1,6 @@
 import { ClassProvider } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { MongoDbDuplicateKeyConstraintFilter } from 'core/exception-filter/mongo-db-duplicate-key-constraint.filter';
+import { MongoDbDuplicateKeyConstraintFilter } from 'core/exception-filters/mongo-db-duplicate-key-constraint.filter';
 import { AccessTokenGuard } from 'core/guards/access-token.guard';
 
 const globalAccessTokenGuard: ClassProvider<AccessTokenGuard> = {
