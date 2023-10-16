@@ -35,9 +35,9 @@ export const jwtOptions: JwtModuleAsyncOptions = {
     signOptions: {
       expiresIn: configService.get<string>('USER_ACCESS_TOKEN_EXPIRES_IN')!,
     },
-    global: true,
   }),
-  inject: [ConfigService],
+  inject: [ConfigService],    
+  global: true,
 };
 
 export const redisOptions: CacheModuleAsyncOptions<RedisClientOptions> = {
