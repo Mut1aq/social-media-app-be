@@ -60,7 +60,7 @@ export class MongoDbDuplicateKeyConstraintFilter implements ExceptionFilter {
       });
     } catch (error) {
       response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-        statusCode: HttpStatus.CONFLICT,
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
         message: 'Internal Server Error, fire your backend developer',
         request: request.path,
         time: new Date().toUTCString(),

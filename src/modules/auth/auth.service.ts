@@ -9,6 +9,7 @@ import { CacheService } from 'core/libs/cache/cache.service';
 import { TokenPayloadI } from 'shared/interfaces/tokens.interface';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'generated/i18n.generated';
+import { ResponseFromServiceClass } from 'shared/interfaces/response.interface';
 
 @Injectable()
 export class AuthService {
@@ -19,15 +20,22 @@ export class AuthService {
     private readonly cacheService: CacheService,
     private readonly i18n: I18nService<I18nTranslations>,
   ) {}
-  async registerUser(createUserDto: CreateUserDto) {
-    const { password } = createUserDto;
+  async registerUser(
+    createUserDto: CreateUserDto,
+  ): Promise<ResponseFromServiceClass<string>> {
+    const { password, email } = createUserDto;
     createUserDto.password = await bcrypt.hash(password, 10);
-    const user = await this.usersService.create(createUserDto);
-
-    return user;
+    await this.usersService.create(createUserDto);
+    const responseFromServiceClass = await this.logUserIn({
+      credentials: email,
+      password,
+    });
+    return responseFromServiceClass;
   }
 
-  async logUserIn(loginUserDto: LoginUserDto) {
+  async logUserIn(
+    loginUserDto: LoginUserDto,
+  ): Promise<ResponseFromServiceClass<string>> {
     const { credentials, password } = loginUserDto;
 
     const user = await this.usersService.findUserByCredentials(credentials);
@@ -54,7 +62,12 @@ export class AuthService {
       'accessToken',
     );
 
-    if (!!accessTokenFromCache) return { accessToken: accessTokenFromCache };
+    if (!!accessTokenFromCache)
+      return {
+        data: accessTokenFromCache,
+        message: 'login successful',
+        statusCode: HttpStatus.OK,
+      };
     const accessToken = this.jwtService.sign(tokenPayload, {
       secret: this.configService.get<string>('USER_ACCESS_TOKEN_SECRET')!,
       expiresIn: this.configService.get<string>(
@@ -68,6 +81,10 @@ export class AuthService {
       86400,
     );
 
-    return { accessToken };
+    return {
+      data: accessToken,
+      message: 'login successful',
+      statusCode: HttpStatus.OK,
+    };
   }
 }

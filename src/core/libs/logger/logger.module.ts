@@ -3,10 +3,11 @@ import { FileWriterModule } from '../file-writer/file-writer.module';
 import { ExceptionsLoggerService } from './exceptions-logger.service';
 import { LoggerListener } from './logger.listener';
 import { LoggerService } from './logger.service';
+import { RequestsLoggerService } from './requests-logger.service';
 
 @Module({
-  providers: [ExceptionsLoggerService, LoggerService],
-  exports: [ExceptionsLoggerService, LoggerService],
+  providers: [ExceptionsLoggerService, LoggerService, RequestsLoggerService],
+  exports: [ExceptionsLoggerService, LoggerService, RequestsLoggerService],
   imports: [FileWriterModule],
 })
 export class LoggerModule extends LoggerListener {}
