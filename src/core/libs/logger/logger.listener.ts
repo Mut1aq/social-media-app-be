@@ -13,5 +13,8 @@ export class LoggerListener implements OnModuleInit {
     if (!existsSync('./logs/app-exceptions.json')) {
       createWriteStream('./logs/app-exceptions.json', { flags: 'a' });
     }
+    if (!existsSync('./logs/app-requests.json')) {
+      createWriteStream('./logs/app-requests.json', { flags: 'a' });
+    }
   }
 }

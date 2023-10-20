@@ -9,7 +9,11 @@ import {
 } from 'shared/configs/app-options.constant';
 import { ModulesModule } from 'modules/modules.module';
 import { JwtModule } from '@nestjs/jwt';
-import { filters, guards } from 'shared/configs/app-configs.constant';
+import {
+  filters,
+  guards,
+  interceptors,
+} from 'shared/configs/app-configs.constant';
 import { CacheModule } from 'core/libs/cache/cache.module';
 import { I18nModule } from 'nestjs-i18n';
 import { LoggerModule } from 'core/libs/logger/logger.module';
@@ -25,6 +29,6 @@ import { LoggerModule } from 'core/libs/logger/logger.module';
     LoggerModule,
   ],
   controllers: [],
-  providers: [...guards, ...filters],
+  providers: [...guards, ...filters, ...interceptors],
 })
 export class AppModule {}
