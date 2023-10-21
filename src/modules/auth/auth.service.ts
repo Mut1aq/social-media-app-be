@@ -9,7 +9,7 @@ import { CacheService } from 'core/libs/cache/cache.service';
 import { TokenPayloadI } from 'shared/interfaces/tokens.interface';
 import { I18nService } from 'nestjs-i18n';
 import { I18nTranslations } from 'generated/i18n.generated';
-import { ResponseFromServiceClass } from 'shared/interfaces/response.interface';
+import { ResponseFromServiceClassI } from 'shared/interfaces/response.interface';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +22,7 @@ export class AuthService {
   ) {}
   async registerUser(
     createUserDto: CreateUserDto,
-  ): Promise<ResponseFromServiceClass<string>> {
+  ): Promise<ResponseFromServiceClassI<string>> {
     const { password, email } = createUserDto;
     createUserDto.password = await bcrypt.hash(password, 10);
     await this.usersService.create(createUserDto);
@@ -35,7 +35,7 @@ export class AuthService {
 
   async logUserIn(
     loginUserDto: LoginUserDto,
-  ): Promise<ResponseFromServiceClass<string>> {
+  ): Promise<ResponseFromServiceClassI<string>> {
     const { credentials, password } = loginUserDto;
 
     const user = await this.usersService.findUserByCredentials(credentials);

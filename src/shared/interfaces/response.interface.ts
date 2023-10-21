@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 
-export interface ResponseFromServiceClass<T = any> {
+export interface ResponseFromServiceClassI<T = unknown> {
   statusCode: HttpStatus;
   message: string;
   data: T;
@@ -12,5 +12,5 @@ export interface ResponseFromLoggingInterceptorI {
   requestDuration: number;
 }
 
-export type ResponseI = ResponseFromServiceClass &
+export type ResponseI = ResponseFromServiceClassI &
   ResponseFromLoggingInterceptorI;
