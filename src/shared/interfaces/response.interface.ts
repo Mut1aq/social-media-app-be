@@ -8,8 +8,8 @@ export interface ResponseFromServiceClassI<T = unknown> {
 
 export interface ResponseFromLoggingInterceptorI {
   path: string;
-  time: string;
-  requestDuration: number;
+  time?: string;
+  requestDuration?: number;
 }
 
 export type ResponseI = ResponseFromServiceClassI &

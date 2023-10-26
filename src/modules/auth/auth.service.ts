@@ -30,7 +30,11 @@ export class AuthService {
       credentials: email,
       password,
     });
-    return responseFromServiceClass;
+    return {
+      ...responseFromServiceClass,
+      statusCode: HttpStatus.CREATED,
+      message: 'Register successful',
+    };
   }
 
   async logUserIn(
