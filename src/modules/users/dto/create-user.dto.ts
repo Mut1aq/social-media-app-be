@@ -1,4 +1,5 @@
 import {
+  Allow,
   IsEmail,
   IsNotEmpty,
   IsString,
@@ -122,4 +123,7 @@ export class CreateUserDto {
     }),
   })
   username!: string;
+
+  @Allow()
+  test!: string;
 }

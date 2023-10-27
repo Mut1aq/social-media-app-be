@@ -31,6 +31,14 @@ export class User {
     trim: true,
   })
   username!: string;
+
+  @Prop({
+    type: Number,
+    min: 2,
+    max: 5,
+    required: true,
+  })
+  test!: number;
 }
 
 export const userSchema = SchemaFactory.createForClass(User);
